@@ -1,7 +1,7 @@
 import pygame as pg
 import sys, os, random, time
 from typing import List, Tuple, Optional
-aaaaaaaaaaaayyyyyyyy
+
 # ---------------- フォント解決 ----------------
 def get_jp_font(size: int) -> pg.font.Font:
     bundle = os.path.join("assets", "fonts", "NotoSansJP-Regular.ttf")
@@ -259,7 +259,7 @@ def main():
                     if 0<=i<14:
                         drag_src = i
                         drag_elem = field[i]
-                        message=f"{SLOTS[i]} を掴んda"
+                        message=f"{SLOTS[i]} を掴んだ"
 
             elif e.type==pg.MOUSEMOTION:
                 mx,my = e.pos
@@ -357,6 +357,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
