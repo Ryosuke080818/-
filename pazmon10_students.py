@@ -259,7 +259,7 @@ def main():
                     if 0<=i<14:
                         drag_src = i
                         drag_elem = field[i]
-                        message=f"{SLOTS[i]} を掴んだ"
+                        message=f"{SLOTS[i]} を掴んda"
 
             elif e.type==pg.MOUSEMOTION:
                 mx,my = e.pos
@@ -357,5 +357,6 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
