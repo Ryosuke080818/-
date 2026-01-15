@@ -1,7 +1,7 @@
 import pygame as pg
 import sys, os, random, time
 from typing import List, Tuple, Optional
-あいうえお
+
 # ---------------- フォント解決 ----------------
 def get_jp_font(size: int) -> pg.font.Font:
     bundle = os.path.join("assets", "fonts", "NotoSansJP-Regular.ttf")
@@ -357,6 +357,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
