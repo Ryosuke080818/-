@@ -27,7 +27,7 @@ FIELD_Y = 520
 SLOT_W = 65
 SLOT_PAD = 3
 LEFT_MARGIN = 30
-GEM_IMG_SIZE = (SLOT_W - 4, SLOT_W - 4) # 宝石の画像サイズ
+GEM_IMG_SIZE = (SLOT_W - 4, SLOT_W - 4) #宝石の画像サイズ
 
 # ドラッグ演出
 DRAG_SCALE = 1.18
@@ -43,7 +43,7 @@ GEMS = ["火", "水", "風", "土", "命"]
 SLOTS = [chr(ord('A')+i) for i in range(14)]
 
 # ---------------- 画像 ----------------
-def load_gem_image(elem: str) -> pg.Surface:　#　宝石の画像をロード
+def load_gem_image(elem: str) -> pg.Surface: #宝石の画像をロードする関数
     m = {
         "火":"fire.png", "水":"water.png",
         "風":"wind.png", "土":"earth.png",
@@ -375,6 +375,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
