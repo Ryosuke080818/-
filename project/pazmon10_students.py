@@ -20,13 +20,14 @@ def get_jp_font(size: int) -> pg.font.Font:
     return pg.font.SysFont(None, size)
 
 # ---------------- 可変パラメータ ----------------
-FRAME_DELAY = 0.5
+FRAME_DELAY = 0.2
 ENEMY_DELAY = 1.0
 WIN_W, WIN_H = 980, 720
 FIELD_Y = 520
-SLOT_W = 60
-SLOT_PAD = 8
+SLOT_W = 65
+SLOT_PAD = 3
 LEFT_MARGIN = 30
+GEM_IMG_SIZE = (SLOT_W - 4, SLOT_W - 4) # 宝石の画像サイズ
 
 # ドラッグ演出
 DRAG_SCALE = 1.18
@@ -42,6 +43,21 @@ GEMS = ["火", "水", "風", "土", "命"]
 SLOTS = [chr(ord('A')+i) for i in range(14)]
 
 # ---------------- 画像 ----------------
+def load_gem_image(elem: str) -> pg.Surface:　#　宝石の画像をロード
+    m = {
+        "火":"fire.png", "水":"water.png",
+        "風":"wind.png", "土":"earth.png",
+        "命":"life.png", "無":"void.png"
+    }
+    fn = m.get(elem)
+    if fn:
+        path = os.path.join("assets","gems",fn)
+        if os.path.exists(path):
+            img = pg.image.load(path).convert_alpha()
+            return pg.transform.smoothscale(img, GEM_IMG_SIZE)
+    surf = pg.Surface(GEM_IMG_SIZE, pg.SRCALPHA); surf.fill((60,60,60,200))
+    return surf
+
 def load_monster_image(name: str) -> pg.Surface:
     m = {
         "スライム":"slime.png", "ゴブリン":"goblin.png",
@@ -142,25 +158,27 @@ def slot_rect(i: int) -> pg.Rect:
     tx = LEFT_MARGIN + i * (SLOT_W + SLOT_PAD)
     return pg.Rect(tx, FIELD_Y, SLOT_W, SLOT_W)
 
-def draw_gem_at(screen, elem: str, x: int, y: int, scale=1.0, with_shadow=False, font=None):
-    r = int((SLOT_W//2 - 10) * scale)
+def draw_gem_at(screen, elem: str, x: int, y: int, scale=1.0, with_shadow=False, gem_images=None):
+    img = gem_images.get(elem)
+    if img is None:
+        return
+    iw, ih = img.get_size()
+    sw, sh = int(iw * scale), int(ih * scale)
+    img_scl = pg.transform.smoothscale(img, (sw, sh))
+    rect = img_scl.get_rect(center=(x, y))
     if with_shadow:
-        shadow = pg.Surface((r*2+6, r*2+6), pg.SRCALPHA)
-        pg.draw.circle(shadow, DRAG_SHADOW, (r+3, r+3), r+3)
-        screen.blit(shadow, (x-r-3, y-r-3))
-    pg.draw.circle(screen, COLOR_RGB[elem], (x, y), r)
-    sym = ELEMENT_SYMBOLS[elem]
-    f = font if font else get_jp_font(int(26*scale))
-    s = f.render(sym, True, (0,0,0))
-    screen.blit(s, (x - s.get_width()//2, y - s.get_height()//2))
+        shadow = pg.Surface((sw + 10, sh + 10), pg.SRCALPHA)
+        pg.draw.ellipse(shadow, DRAG_SHADOW, shadow.get_rect())
+        screen.blit(shadow, (rect.x - 5, rect.y - 5 + 4))
+    screen.blit(img_scl, rect.topleft)
 
 def draw_field(screen, field:List[str], font, hover_idx:Optional[int]=None,
-               drag_src:Optional[int]=None, drag_elem:Optional[str]=None):
+               drag_src:Optional[int]=None, drag_elem:Optional[str]=None, gem_images=None):
     # スロット見出し
-    for i,slot in enumerate(SLOTS):
-        tx=LEFT_MARGIN+i*(SLOT_W+SLOT_PAD)
-        s=font.render(slot, True, (220,220,220))
-        screen.blit(s,(tx, FIELD_Y-28))
+    for i,elem in enumerate(field):
+        rect = slot_rect(i)
+        s=font.render(SLOTS[i], True, (220,220,220))
+        screen.blit(s,(rect.x + rect.width // 2 - s.get_width() // 2, rect.y - s.get_height() - 4))
     # スロット下地 & ホバー強調
     for i,_ in enumerate(field):
         rect=slot_rect(i)
@@ -172,14 +190,13 @@ def draw_field(screen, field:List[str], font, hover_idx:Optional[int]=None,
             continue
         rect=slot_rect(i)
         cx,cy=rect.center
-        pg.draw.circle(screen, COLOR_RGB[elem], (cx,cy), SLOT_W//2-10)
+        draw_gem_at(screen, elem, cx, cy, gem_images=gem_images)
         sym = ELEMENT_SYMBOLS[elem]
-        s = font.render(sym, True, (0,0,0))
-        screen.blit(s,(cx-s.get_width()//2, cy-s.get_height()//2))
+        
     # ドラッグ中の宝石（ゴースト）をカーソル位置に拡大表示
     if drag_elem is not None:
         mx, my = pg.mouse.get_pos()
-        draw_gem_at(screen, drag_elem, mx, my-4, scale=DRAG_SCALE, with_shadow=True, font=font)
+        draw_gem_at(screen, drag_elem, mx, my-4, scale=DRAG_SCALE, with_shadow=True, gem_images=gem_images)
 
 def draw_top(screen, enemy, party, font):
     # 敵画像/名前
@@ -216,6 +233,7 @@ def draw_message(screen, text, font):
 def main():
     pg.init()
     screen = pg.display.set_mode((WIN_W, WIN_H))
+    gem_images = {elem: load_gem_image(elem) for elem in GEMS + ["無"]}
     pg.display.set_caption("Puzzle & Monsters - GUI Prototype")
     font = get_jp_font(26)
 
@@ -243,7 +261,7 @@ def main():
     drag_src: Optional[int] = None
     drag_elem: Optional[str] = None
     hover_idx: Optional[int] = None
-    message = "ドラッグで A..N の宝石を移動（例：A→F）"
+    message = "ドラッグで宝石を移動"
 
     clock = pg.time.Clock()
     running=True
@@ -285,7 +303,7 @@ def main():
                                 message=f"{SLOTS[k-step]}↔{SLOTS[k]} を交換"
                                 screen.fill((22,22,28))
                                 draw_top(screen, enemy, party, font)
-                                draw_field(screen, field, font, hover_idx=None, drag_src=None, drag_elem=None)
+                                draw_field(screen, field, font, hover_idx=None, drag_src=None, drag_elem=None, gem_images=gem_images)
                                 draw_message(screen, message, font)
                                 pg.display.flip()
                                 time.sleep(FRAME_DELAY)
@@ -307,11 +325,11 @@ def main():
                                 message=f"{elem}攻撃！ {dmg} ダメージ"
                             collapse_left(field,start,L)
                             screen.fill((22,22,28)); draw_top(screen, enemy, party, font)
-                            draw_field(screen, field, font); draw_message(screen, "消滅！", font)
+                            draw_field(screen, field, font, gem_images=gem_images); draw_message(screen, "消滅！", font)
                             pg.display.flip(); time.sleep(FRAME_DELAY)
                             fill_random(field)
                             screen.fill((22,22,28)); draw_top(screen, enemy, party, font)
-                            draw_field(screen, field, font); draw_message(screen, "湧き！", font)
+                            draw_field(screen, field, font, gem_images=gem_images); draw_message(screen, "湧き！", font)
                             pg.display.flip(); time.sleep(FRAME_DELAY)
                             if enemy['hp']<=0:
                                 message=f"{enemy['name']} を倒した！"
@@ -322,7 +340,7 @@ def main():
                             edmg=enemy_attack(party, enemy)
                             message=f"{enemy['name']}の攻撃！ -{edmg}"
                             screen.fill((22,22,28)); draw_top(screen, enemy, party, font)
-                            draw_field(screen, field, font); draw_message(screen, message, font)
+                            draw_field(screen, field, font, gem_images=gem_images); draw_message(screen, message, font)
                             pg.display.flip(); time.sleep(FRAME_DELAY)
                             if party['hp']<=0:
                                 message="パーティは力尽きた…（ESCで終了）"
@@ -343,7 +361,7 @@ def main():
         # 常時描画
         screen.fill((22,22,28))
         draw_top(screen, enemy, party, font)
-        draw_field(screen, field, font, hover_idx, drag_src, drag_elem)
+        draw_field(screen, field, font, hover_idx, drag_src, drag_elem, gem_images=gem_images)
         draw_message(screen, message, font)
         pg.display.flip()
         clock.tick(60)
@@ -357,5 +375,6 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
