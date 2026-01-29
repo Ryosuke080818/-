@@ -351,7 +351,7 @@ def main():
             elif e.type==pg.MOUSEBUTTONUP and e.button==1:
                 if drag_src is not None:
                     combo=0
-                        while True:
+                    while True:
                             run = leftmost_run(field)
                             if not run: break
                             start,L = run
@@ -416,6 +416,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
