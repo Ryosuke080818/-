@@ -371,7 +371,8 @@ def main():
                     combo=0
                     while True:
                             run = leftmost_run(field)
-                            if not run: break
+                            if not run:
+                                break
                             start,L = run
                             combo+=1
                             elem = field[start]
@@ -442,6 +443,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
