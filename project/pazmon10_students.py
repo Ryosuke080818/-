@@ -229,6 +229,60 @@ def draw_message(screen, text, font):
     surf = font.render(text, True, (230,230,230))
     screen.blit(surf,(40,460))
 
+# ---------------- タイトル画面 ----------------
+
+def title_screen(screen: pg.Surface, font: pg.font.Font) -> bool:
+
+#　ボタンはクリックのみ　True: ゲーム開始 / False: 終了
+
+    title_font = get_jp_font(56)
+    sub_font = get_jp_font(24)
+    clock = pg.time.Clock()
+
+    # ボタン　（追加可能）
+    btn_w, btn_h = 320, 64
+    start_btn = pg.Rect(WIN_W//2 - btn_w//2, 300, btn_w, btn_h)
+    quit_btn  = pg.Rect(WIN_W//2 - btn_w//2, 380, btn_w, btn_h)
+    #                   横　　　　　　縦　　　　　　ボタン幅　高さ
+    while True:
+        mx, my = pg.mouse.get_pos()#マウスの座標
+
+        for e in pg.event.get():
+            if e.type == pg.QUIT:
+                return False
+            if e.type == pg.KEYDOWN:
+                if e.key == pg.K_ESCAPE:
+                    return False
+            if e.type == pg.MOUSEBUTTONDOWN and e.button == 1:
+                if start_btn.collidepoint(e.pos):
+                    return True
+                if quit_btn.collidepoint(e.pos):
+                    return False
+
+        screen.fill((12, 12, 18))
+
+        t = title_font.render("Puzzle & Monsters", True, (240, 240, 240))#タイトル
+        screen.blit(t, (WIN_W//2 - t.get_width()//2, 170))
+
+
+        # ボタン描画（ホバー機能）
+        start_hover = start_btn.collidepoint(mx, my)
+        quit_hover = quit_btn.collidepoint(mx, my)
+
+        pg.draw.rect(screen, (70, 120, 220) if start_hover else (50, 90, 170), start_btn, border_radius=12)
+        pg.draw.rect(screen, (220, 90, 90) if quit_hover else (170, 60, 60), quit_btn, border_radius=12)
+        pg.draw.rect(screen, (230, 230, 230), start_btn, width=2, border_radius=12)
+        pg.draw.rect(screen, (230, 230, 230), quit_btn, width=2, border_radius=12)
+        #ボタン文字
+        s1 = sub_font.render("スタート", True, (245, 245, 245))
+        screen.blit(s1, (start_btn.centerx - s1.get_width()//2, start_btn.centery - s1.get_height()//2))
+
+        s2 = sub_font.render("終了", True, (245, 245, 245))
+        screen.blit(s2, (quit_btn.centerx - s2.get_width()//2, quit_btn.centery - s2.get_height()//2))
+
+        pg.display.flip()
+        clock.tick(60)
+
 # ---------------- メイン ----------------
 def main():
     pg.init()
@@ -237,6 +291,10 @@ def main():
     pg.display.set_caption("Puzzle & Monsters - GUI Prototype")
     font = get_jp_font(26)
 
+    if not title_screen(screen, font):
+        pg.quit()
+        sys.exit()
+    
     party = {
         "player_name":"Player",
         "allies":[
@@ -358,6 +416,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
