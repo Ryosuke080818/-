@@ -281,35 +281,18 @@ def main():
 
             elif e.type==pg.MOUSEMOTION:
                 mx,my = e.pos
-                if FIELD_Y<=my<=FIELD_Y+SLOT_W:
-                    hi = (mx-LEFT_MARGIN)//(SLOT_W+SLOT_PAD)
-                    hover_idx = hi if 0<=hi<14 else None
+                hi = (mx-LEFT_MARGIN)//(SLOT_W+SLOT_PAD)
+                if 0<=hi<14 and FIELD_Y<=my<=FIELD_Y+SLOT_W:
+                    hover_idx = hi
+                    if drag_src is not None and hover_idx != drag_src:
+                        field[drag_src], field[hover_idx] = field[hover_idx], field[drag_src]
+                        drag_src = hover_idx
                 else:
                     hover_idx = None
 
             elif e.type==pg.MOUSEBUTTONUP and e.button==1:
                 if drag_src is not None:
-                    mx,my = e.pos
-                    j = (mx-LEFT_MARGIN)//(SLOT_W+SLOT_PAD)
-                    if 0<=j<14:
-                        i = drag_src
-                        if i != j:
-                            step = 1 if j>i else -1
-                            k = i
-                            while k!=j:
-                                nxt = k + step
-                                field[k], field[nxt] = field[nxt], field[k]
-                                k = nxt
-                                message=f"{SLOTS[k-step]}↔{SLOTS[k]} を交換"
-                                screen.fill((22,22,28))
-                                draw_top(screen, enemy, party, font)
-                                draw_field(screen, field, font, hover_idx=None, drag_src=None, drag_elem=None, gem_images=gem_images)
-                                draw_message(screen, message, font)
-                                pg.display.flip()
-                                time.sleep(FRAME_DELAY)
-
-                        # 評価ループ
-                        combo=0
+                    combo=0
                         while True:
                             run = leftmost_run(field)
                             if not run: break
@@ -375,6 +358,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
