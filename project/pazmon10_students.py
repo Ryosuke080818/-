@@ -427,10 +427,10 @@ def main():
         clock.tick(60)
 
          # 「タイトルへ」描画
-        mx,my = pg.mouse.get_cursorget_pos(mx, my)
+        mx, my = pg.mouse.get_pos()
         back_hover = back_btn.collidepoint(mx, my)
-        pg.draw.rect(screen, (80, 80, 110) if back_hover else (55, 55, 75), back_btn, border_radious=10)
-        pg.draw.rest(screen, (230, 230, 230), back_btn, width=2, border_radius=10)
+        pg.draw.rect(screen, (80, 80, 110) if back_hover else (55, 55, 75), back_btn, border_radius=10)
+        pg.draw.rect(screen, (230, 230, 230), back_btn, width=2, border_radius=10)
         btxt = get_jp_font(18).render("タイトルへ", True, (245, 245, 245))
         screen.blit(btxt, (back_btn.centerx - btxt.get_width()//2, back_btn.centery - btxt.get_height()//2))
 
@@ -443,6 +443,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
