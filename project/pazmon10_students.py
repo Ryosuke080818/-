@@ -294,6 +294,7 @@ def main():
     if not title_screen(screen, font):
         pg.quit()
         sys.exit()
+    back_btn = pg.Rect(WIN_W - 160, 10, 150, 38) #タイトルへ戻るボタン
     
     party = {
         "player_name":"Player",
@@ -329,6 +330,23 @@ def main():
                 running=False
 
             elif e.type==pg.MOUSEBUTTONDOWN and e.button==1:
+                # タイトルへ戻る
+                if back_btn.collidepoint(e.pos):
+                    if not title_screen(screen, font):
+                        pg.quit()
+                        sys.exit()
+                    # ゲーム状態を初期化
+                    party['hp'] = party['max_hp']
+                    enemy_idx = 0
+                    enemy = enemies[enemy_idx]
+                    enemy['hp'] = enemy['max_hp']
+                    field = init_field()
+                    message = "ドラッグで宝石を移動"
+                    drag_src = None
+                    drag_elem = None
+                    hover_idx = None
+                    continue
+                    
                 mx,my = e.pos
                 if FIELD_Y<=my<=FIELD_Y+SLOT_W:
                     i = (mx-LEFT_MARGIN)//(SLOT_W+SLOT_PAD)
@@ -407,6 +425,14 @@ def main():
         pg.display.flip()
         clock.tick(60)
 
+         # 「タイトルへ」描画
+        mx,my = pg.mouse.get_cursorget_pos(mx, my)
+        back_hover = back_btn.collidepoint(mx, my)
+        pg.draw.rect(screen, (80, 80, 110) if back_hover else (55, 55, 75), back_btn, border_radious=10)
+        pg.draw.rest(screen, (230, 230, 230), back_btn, width=2, border_radius=10)
+        btxt = get_jp_font(18).render("タイトルへ", True, (245, 245, 245))
+        screen.blit(btxt, (back_btn.centerx - btxt.get_width()//2, back_btn.centery - btxt.get_height()//2))
+
         keys=pg.key.get_pressed()
         if keys[pg.K_ESCAPE]:
             running=False
@@ -416,6 +442,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
