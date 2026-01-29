@@ -377,7 +377,7 @@ def main():
                                 break
 
                         # 敵ターン or 撃破後処理
-                        if enemy['hp']>0:
+                    if enemy['hp']>0:
                             edmg=enemy_attack(party, enemy)
                             message=f"{enemy['name']}の攻撃！ -{edmg}"
                             screen.fill((22,22,28)); draw_top(screen, enemy, party, font)
@@ -385,7 +385,7 @@ def main():
                             pg.display.flip(); time.sleep(FRAME_DELAY)
                             if party['hp']<=0:
                                 message="パーティは力尽きた…（ESCで終了）"
-                        else:
+                    else:
                             enemy_idx+=1
                             if enemy_idx<len(enemies):
                                 enemy=enemies[enemy_idx]
@@ -416,6 +416,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
