@@ -4,11 +4,11 @@ from typing import List, Tuple, Optional
 
 # ---------------- フォント解決 ----------------
 def get_jp_font(size: int) -> pg.font.Font:
-    bundle = os.path.join("assets", "fonts", "NotoSansJP-Regular.ttf")
+    bundle = os.path.join("assets", "fonts", "BestTen-CRT.ttf")
     if os.path.exists(bundle):
         return pg.font.Font(bundle, size)
     candidates = [
-        "Noto Sans CJK JP", "Noto Sans JP",
+        "NotoSansJP-Regular", "Noto Sans CJK JP", "Noto Sans JP",
         "Yu Gothic UI", "Yu Gothic",
         "Meiryo", "MS Gothic",
         "Hiragino Sans", "Hiragino Kaku Gothic ProN",
@@ -22,16 +22,20 @@ def get_jp_font(size: int) -> pg.font.Font:
 # ---------------- 可変パラメータ ----------------
 FRAME_DELAY = 0.2
 ENEMY_DELAY = 1.0
-WIN_W, WIN_H = 980, 720
+WIN_W, WIN_H = 1010, 720
 FIELD_Y = 520
 SLOT_W = 65
 SLOT_PAD = 3
 LEFT_MARGIN = 30
 GEM_IMG_SIZE = (SLOT_W - 4, SLOT_W - 4) #宝石の画像サイズ
 
-# ドラッグ演出
+# ドラッグ演出のための変数
 DRAG_SCALE = 1.18
 DRAG_SHADOW = (0, 0, 0, 90)
+
+#敵画像アニメーションのための変数
+anim_timer = 0
+show_frame = 0
 
 # ---------------- 定義 ----------------
 ELEMENT_SYMBOLS = {"火": "火", "水": "水", "風": "風", "土": "土", "命": "命", "無": " "}
@@ -58,20 +62,26 @@ def load_gem_image(elem: str) -> pg.Surface: #宝石の画像をロードする�
     surf = pg.Surface(GEM_IMG_SIZE, pg.SRCALPHA); surf.fill((60,60,60,200))
     return surf
 
-def load_monster_image(name: str) -> pg.Surface:
+def load_monster_images(name: str) -> list[pg.Surface]:
     m = {
-        "スライム":"slime.png", "ゴブリン":"goblin.png",
-        "オオコウモリ":"bat.png", "ウェアウルフ":"werewolf.png",
-        "ドラゴン":"dragon.png"
+        "スライム":["slime1.png", "slime2.png"],
+        "ゴブリン":["goblin1.png","goblin2.png"],
+        "オオコウモリ":["bat1.png","bat2.png"],
+        "ウェアウルフ":["werewolf1.png","werewolf2.png"],
+        "ドラゴン":["dragon1.png","dragon2.png"]
     }
     fn = m.get(name)
+    surfaces = []
     if fn:
-        path = os.path.join("assets","monsters",fn)
-        if os.path.exists(path):
-            img = pg.image.load(path).convert_alpha()
-            return pg.transform.smoothscale(img, (256,256))
-    surf = pg.Surface((256,256), pg.SRCALPHA); surf.fill((60,60,60,200))
-    return surf
+        for f in fn:
+            path = os.path.join("assets","monsters",f)
+            if os.path.exists(path):
+                img = pg.image.load(path).convert_alpha()
+                surfaces.append(pg.transform.smoothscale(img, (256,256)))
+    if not surfaces:
+        surf = pg.Surface((256,256), pg.SRCALPHA); surf.fill((60,60,60,200))
+        return [surf, surf]
+    return surfaces
 
 # ---------------- HPバー ----------------
 def hp_bar_surf(current: int, max_hp: int, w: int, h: int) -> pg.Surface:
@@ -198,9 +208,10 @@ def draw_field(screen, field:List[str], font, hover_idx:Optional[int]=None,
         mx, my = pg.mouse.get_pos()
         draw_gem_at(screen, drag_elem, mx, my-4, scale=DRAG_SCALE, with_shadow=True, gem_images=gem_images)
 
-def draw_top(screen, enemy, party, font):
+def draw_top(screen, enemy, party, font, enemy_frames, show_frame=0):
     # 敵画像/名前
-    img = load_monster_image(enemy["name"])
+    actual_frame = show_frame % len(enemy_frames)
+    img = enemy_frames[actual_frame]
     screen.blit(img, (40, 40))
 
     # 敵名とHPバー
@@ -295,6 +306,10 @@ def main():
         pg.quit()
         sys.exit()
     back_btn = pg.Rect(WIN_W - 160, 10, 150, 38) #タイトルへ戻るボタン
+
+    #アニメーション用変数
+    anim_timer = pg.time.get_ticks()
+    show_frame = 0
     
     party = {
         "player_name":"Player",
@@ -317,6 +332,8 @@ def main():
     enemy = enemies[enemy_idx]
     field = init_field()
 
+    monster_images = load_monster_images(enemy["name"]) #####
+
     drag_src: Optional[int] = None
     drag_elem: Optional[str] = None
     hover_idx: Optional[int] = None
@@ -325,6 +342,11 @@ def main():
     clock = pg.time.Clock()
     running=True
     while running:
+        current_time = pg.time.get_ticks() #アニメーション処理
+        if current_time - anim_timer > 500:  # 1フレーム0.5秒
+            show_frame = (show_frame + 1) % len(monster_images)
+            anim_timer = current_time
+        
         for e in pg.event.get():
             if e.type==pg.QUIT:
                 running=False
@@ -384,11 +406,11 @@ def main():
                                 dmg=party_attack_from_gems(elem,L,combo,party,enemy)
                                 message=f"{elem}攻撃！ {dmg} ダメージ"
                             collapse_left(field,start,L)
-                            screen.fill((22,22,28)); draw_top(screen, enemy, party, font)
+                            screen.fill((22,22,28)); draw_top(screen, enemy, party, font, monster_images, show_frame)
                             draw_field(screen, field, font, gem_images=gem_images); draw_message(screen, "消滅！", font)
                             pg.display.flip(); time.sleep(FRAME_DELAY)
                             fill_random(field)
-                            screen.fill((22,22,28)); draw_top(screen, enemy, party, font)
+                            screen.fill((22,22,28)); draw_top(screen, enemy, party, font, monster_images, show_frame)
                             draw_field(screen, field, font, gem_images=gem_images); draw_message(screen, "湧き！", font)
                             pg.display.flip(); time.sleep(FRAME_DELAY)
                             if enemy['hp']<=0:
@@ -399,7 +421,7 @@ def main():
                     if enemy['hp']>0:
                             edmg=enemy_attack(party, enemy)
                             message=f"{enemy['name']}の攻撃！ -{edmg}"
-                            screen.fill((22,22,28)); draw_top(screen, enemy, party, font)
+                            screen.fill((22,22,28)); draw_top(screen, enemy, party, font, monster_images, show_frame)
                             draw_field(screen, field, font, gem_images=gem_images); draw_message(screen, message, font)
                             pg.display.flip(); time.sleep(FRAME_DELAY)
                             if party['hp']<=0:
@@ -408,6 +430,7 @@ def main():
                             enemy_idx+=1
                             if enemy_idx<len(enemies):
                                 enemy=enemies[enemy_idx]
+                                monster_images = load_monster_images(enemy["name"]) #敵画像をロード
                                 field=init_field()
                                 message=f"さらに奥へ… 次は {enemy['name']}"
                             else:
@@ -420,7 +443,7 @@ def main():
 
         # 常時描画
         screen.fill((22,22,28))
-        draw_top(screen, enemy, party, font)
+        draw_top(screen, enemy, party, font, monster_images, show_frame)
         draw_field(screen, field, font, hover_idx, drag_src, drag_elem, gem_images=gem_images)
         draw_message(screen, message, font)
         pg.display.flip()
@@ -443,6 +466,7 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
 
 
