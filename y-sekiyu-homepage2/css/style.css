@@ -1,0 +1,1512 @@
+/********** Template CSS **********/
+
+.back-to-top {
+    position: fixed;
+    display: none;
+    right: 30px;
+    bottom: 30px;
+    z-index: 99;
+}
+
+.fw-medium {
+    font-weight: 600;
+}
+
+.mt-6 {
+    margin-top: 5rem;
+}
+
+.mb-6 {
+    margin-bottom: 5rem;
+}
+
+.pt-6 {
+    padding-top: 5rem;
+}
+
+.pb-6 {
+    padding-bottom: 5rem;
+}
+
+
+/*** Spinner ***/
+#spinner {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s ease-out, visibility 0s linear .5s;
+    z-index: 99999;
+}
+
+#spinner.show {
+    transition: opacity .5s ease-out, visibility 0s linear 0s;
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/*** Button ***/
+.btn {
+    transition: .5s;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.btn-primary,
+.btn-outline-primary:hover {
+    color: var(--bs-light);
+}
+
+.btn-secondary,
+.btn-outline-secondary:hover {
+    color: var(--bs-dark);
+}
+
+.btn-square {
+    width: 38px;
+    height: 38px;
+}
+
+.btn-sm-square {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-lg-square {
+    width: 48px;
+    height: 48px;
+}
+
+.btn-xl-square {
+    width: 60px;
+    height: 60px;
+}
+
+.btn-xxl-square {
+    width: 75px;
+    height: 75px;
+}
+
+.btn-square,
+.btn-sm-square,
+.btn-lg-square,
+.btn-xl-square,
+.btn-xxl-square {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
+/*** Navbar ***/
+.sticky-top {
+    top: 0px;
+    transition: .5s;
+}
+
+.navbar .navbar-nav .nav-link {
+    margin-right: 35px;
+    padding: 25px 0;
+    color: var(--bs-dark);
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    outline: none;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active {
+    color: #e94709 !important;
+}
+
+.navbar .dropdown-toggle::after {
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+@media (max-width: 991.98px) {
+    .navbar .navbar-nav .nav-link  {
+        margin-right: 0;
+        padding: 10px 0;
+    }
+
+    .navbar .navbar-nav {
+        margin-top: 15px;
+        border-top: 1px solid #EEEEEE;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar .nav-item .dropdown-menu {
+        display: block;
+        border: none;
+        margin-top: 0;
+        top: 150%;
+        opacity: 0;
+        visibility: hidden;
+        transition: .5s;
+    }
+
+    .navbar .nav-item:hover .dropdown-menu {
+        top: 100%;
+        visibility: visible;
+        transition: .5s;
+        opacity: 1;
+    }
+}
+
+
+/*** Header ***/
+.carousel .carousel-caption {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    text-align: left;
+    background: rgba(0, 0, 0, .7);
+    padding: 3rem;
+    padding-left: 11rem;
+    z-index: 1;
+}
+
+.carousel .carousel-indicators {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: 80px;
+    flex-direction: column;
+    margin: 0;
+    margin-left: 3rem;
+}
+
+
+
+.carousel .carousel-indicators [data-bs-target] img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 992px) {
+    .carousel .carousel-item {
+        position: relative;
+        min-height: 600px;
+    }
+    
+    .carousel .carousel-item img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .carousel .carousel-indicators [data-bs-target] {
+        width: 60px;
+        height: 60px;
+    }
+
+    .carousel .carousel-caption {
+        padding-left: 10rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel .carousel-item {
+        min-height: 500px;
+    }
+
+    .carousel .carousel-indicators [data-bs-target] {
+        width: 50px;
+        height: 50px;
+    }
+
+    .carousel .carousel-caption {
+        padding-left: 9rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .carousel .carousel-item .display-1 {
+        font-size: 7rem;
+    }
+}
+
+.page-header {
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/carousel-1.jpg) center center no-repeat;
+    background-size: cover;
+}
+
+
+/*** About ***/
+.about-img {
+    position: relative;
+    padding-left: 45px;
+}
+
+.about-img::before {
+    position: absolute;
+    content: "";
+    width: 200px;
+    height: 300px;
+    top: 0;
+    left: 0;
+    border: 5px solid var(--bs-primary);
+    animation: animateUpDown 3s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes animateUpDown { 
+    0% { 
+        top: -25px;
+    }
+    50% { 
+        top: -45px;
+    }
+    100% { 
+        top: -25px;
+    } 
+}
+
+
+/*** Features ***/
+.feature {
+    background: linear-gradient(to right, rgba(0, 0, 0, .1), rgba(0, 0, 0, 1) 50%), url(../img/carousel-1.jpg) left center no-repeat;
+    background-size: cover;
+}
+
+.feature-row {
+    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+}
+
+.feature-item {
+    border-color: rgba(0, 0, 0, .03) !important;
+}
+
+.feature-icon {
+    position: relative;
+    transition: .5s;
+}
+
+.feature-item:hover .feature-icon {
+    margin-left: 3rem;
+}
+
+.feature-item a::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: var(--bs-secondary);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.feature-item a:hover {
+    color: var(--bs-primary) !important;
+}
+
+.feature-item a:hover::after {
+    background: var(--bs-primary);
+}
+
+.experience .progress {
+    height: 5px;
+}
+
+.experience .progress .progress-bar {
+    width: 0px;
+    transition: 3s;
+}
+
+
+/*** Service ***/
+.service .service-item {
+    position: relative;
+    margin-top: 45px;
+}
+
+.service .service-inner {
+    position: relative;
+    height: 100%;
+    margin-top: 45px;
+    background: var(--bs-white);
+    box-shadow: 0 0 45px rgba(0, 0, 0, .05);
+}
+
+.service .service-inner::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 0;
+    left: 0;
+    bottom: 0;
+    transition: 1s;
+    background: #e94709 !important;
+}
+
+.service .service-inner:hover::before {
+    height: 100%;
+    top: 0;
+}
+
+.service .service-item img {
+    margin-top: -45px;
+    padding-left: 45px;
+}
+
+.service .service-item * {
+    position: relative;
+    transition: .5s;
+    z-index: 1;
+}
+
+.service .service-item:hover h5,
+.service .service-item:hover p {
+    color: var(--bs-white);
+}
+
+.service .service-item:hover a {
+    padding-left: 45px !important;
+}
+
+
+/*** Appoinment ***/
+.appoinment {
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/carousel-2.jpg) left center no-repeat;
+    background-size: cover;
+}
+
+
+/*** Team ***/
+.team .team-item {
+    background: var(--bs-white);
+    box-shadow: 0 0 45px rgba(0, 0, 0, .05);
+}
+
+.team .team-item .team-social {
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    transition: .5s;
+    background: var(--bs-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team .team-item:hover .team-social {
+    width: 100%;
+    left: 0;
+}
+
+.team .team-item .team-social .btn {
+    opacity: 0;
+    transition: .5s;
+}
+
+.team .team-item:hover .team-social .btn {
+    opacity: 1;
+}
+
+
+/*** Testimonial ***/
+.testimonial-img {
+    position: relative;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.testimonial-img div {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    animation-duration: 5s;
+}
+
+.testimonial-img div:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    animation-delay: .1s;
+}
+
+.testimonial-img div:nth-child(2) {
+    top: 60%;
+    left: 20%;
+    animation-delay: .4s;
+}
+
+.testimonial-img div:nth-child(3) {
+    top: 20%;
+    left: 60%;
+    animation-delay: .7s;
+}
+
+.testimonial-img div:nth-child(4) {
+    bottom: 10%;
+    right: 10%;
+    animation-delay: 1s;
+}
+
+.testimonial-img div::after {
+    position: absolute;
+    content: "";
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    box-shadow: 0 0 10px 10px var(--bs-white) inset;
+    z-index: 1;
+}
+
+.testimonial-carousel .owl-item img {
+    width: 100px;
+    height: 100px;
+}
+
+.testimonial-carousel .owl-nav {
+    margin-top: 15px;
+    display: flex;
+}
+
+.testimonial-carousel .owl-nav .owl-prev,
+.testimonial-carousel .owl-nav .owl-next {
+    margin-right: 15px;
+    color: var(--bs-primary);
+    font-size: 45px;
+    transition: .5s;
+}
+
+.testimonial-carousel .owl-nav .owl-prev:hover,
+.testimonial-carousel .owl-nav .owl-next:hover {
+    color: var(--bs-dark);
+}
+
+
+/*** Contact ***/
+@media (min-width: 992px) {
+    .contact-info::after {
+        position: absolute;
+        content: "";
+        width: 0px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        border-left: 1px dashed rgb(255, 255, 255, .2);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .contact-info::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 0px;
+        top: 50%;
+        left: 0;
+        border-top: 1px dashed rgba(255, 255, 255, .2);
+    }
+}
+
+
+/*** Appoinment ***/
+.newsletter {
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/carousel-3.jpg) left center no-repeat;
+    background-size: cover;
+}
+
+
+/*** Footer ***/
+.footer .btn.btn-link {
+    display: block;
+    margin-bottom: 5px;
+    padding: 0;
+    text-align: left;
+    color: var(--bs-secondary);
+    font-weight: normal;
+    text-transform: capitalize;
+    transition: .3s;
+}
+
+.footer .btn.btn-link::before {
+    position: relative;
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #e94709 !important;
+    margin-right: 10px;
+}
+
+.footer .btn.btn-link:hover {
+    color: var(--bs-primary);
+    letter-spacing: 1px;
+    box-shadow: none;
+}
+
+.copyright {
+    background: #222222;
+}
+
+.copyright a {
+    color: var(--bs-white);
+}
+
+.copyright a:hover {
+    color: var(--bs-primary);
+}
+
+/* サイト全体のPrimaryカラーを一括上書き */
+:root {
+    --primary: #e94709;
+}
+
+/* 背景色、ボタン、テキストの色の変更 */
+.bg-primary, .btn-primary, .spinner-border {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #ffffff !important;
+}
+
+.text-primary, .feature-icon i {
+    color: var(--primary) !important;
+}
+
+/* Topbarに細いラインを追加 */
+.container-fluid.bg-primary {
+    border-bottom: 13px solid #d6001c !important;
+}
+
+/* 画像の周りにあるL字型の枠線（Aboutセクションなど） */
+.about-img::before, .about-img::after {
+    border-color: var(--primary) !important;
+}
+
+/* サービスや特徴の枠線・装飾 */
+.border-primary, .btn-xl-square, .btn-lg-square {
+    border-color: var(--primary) !important;
+}
+
+.bg-light i.text-primary {
+    color: var(--primary) !important;
+}
+
+.container-fluid.bg-primary.wow.fadeIn {
+    border-bottom: 6px solid #d6001c !important;
+}
+
+/* ホバー時の色を一括でオレンジに変更 */
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active,
+.service .service-inner::before,
+.team .team-item .team-social,
+.footer .btn.btn-link:hover,
+.copyright a:hover {
+    color: #e94709 !important;
+    background-color: transparent; /* テキストの場合 */
+}
+
+.service .service-inner::before,
+.team .team-item .team-social {
+    background-color: #e94709 !important;
+}
+
+@media (max-width: 991.98px) {
+    /* ナビゲーション全体の余白リセット */
+    .navbar {
+        padding: 0 !important;
+    }
+
+    /* 会社名エリアの調整 */
+    .navbar-brand {
+        display: block;
+        padding: 15px 0;
+        /* 文字が長すぎる場合に備えて少し小さく */
+        font-size: 1.1rem !important; 
+    }
+
+    /* メニューボタン（ハンバーガー）を右側に固定 */
+    .navbar-toggler {
+        margin-right: 15px;
+        border: 1px solid rgba(255,255,255,0.5); /* ボタンの枠を少し見やすく */
+    }
+
+    /* 赤いラインをここに追加 */
+    .navbar-brand-container {
+        border-bottom: 3px solid #d6001c !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* メインビジュアル内の文字位置と余白の調整 */
+    .carousel-caption {
+        padding-left: 1rem !important; /* 左側の大きな余白を詰める */
+        align-items: center !important; /* 中央寄せにしたい場合 */
+        text-align: center !important;
+        left: 0;
+    }
+
+    /* キャッチコピーの文字が画面からはみ出さないように自動調整 */
+    .carousel-caption h1 {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* ナビゲーションメニュー展開時の余白 */
+    .navbar-collapse {
+        background: #ffffff;
+        padding: 0px 20px;
+    }
+}
+
+/* ③ キャッチコピー背景に黒フィルターを追加 */
+.carousel-item {
+    position: relative;
+}
+.carousel-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* 黒フィルター（40%の濃さ） */
+    z-index: 1;
+}
+.carousel-caption {
+    z-index: 2; /* 文字をフィルターより前に出す */
+}
+
+/* ② キャッチコピーの文字サイズ調整（省略防止） */
+@media (max-width: 768px) {
+    .carousel-caption h1.display-1 {
+        font-size: 2.2rem !important; /* スマホで入り切るサイズに縮小 */
+        white-space: normal !important; /* 折り返しを許可 */
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+}
+
+/* ④ 「当店について」のL字装飾のサイズ調整 */
+.about-img::before {
+    width: 180px !important; 
+    height: 180px !important;
+    border-width: 4px !important;
+    box-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.4), 
+        inset 0 0 15px rgba(255, 255, 255, 0.4) !important;
+    display: none !important;
+}
+
+/* ⑥ スマホメニューボタンの三本線を太く強調 */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* ⑤ TOPボタンの微調整 */
+.back-to-top {
+    right: 20px;
+    bottom: 20px;
+}
+
+.carousel-caption {
+    padding: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    align-items: center !important;    
+    justify-content: center !important; 
+    height: 100%;
+    top: 0;
+    text-align: center !important;
+    z-index: 2; 
+}
+
+/* フィルターの設定を修正 */
+.hero-header {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+.hero-header img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.hero-header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .carousel-caption h1.display-1 {
+        font-size: calc(1.5rem + 4vw) !important; /* スマホでちょうど良い大きさに */
+        white-space: normal !important; /* 画面が狭い場合は折り返しを許可 */
+        overflow: visible !important;
+    }
+}
+
+/* ①「当店について」の大きい画像 */
+.about-img img {
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4) !important;
+    border-radius: 2px; /* 角を少し丸くすると影がより自然に見えます */
+}
+
+/* ② アイコンの背景（薄グレーの四角） */
+.btn-xl-square.bg-light {
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ⑤「TOPへ」ボタン */
+.back-to-top {
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+.hero-header img, .hero-header::after {
+    backface-visibility: hidden;
+    transform: translateZ(0); /* 強制的に描画レイヤーを分離して計算を正確にする */
+}
+
+/* 「当店について」の画像も同様にズレる可能性があるためリセット */
+.about-img {
+    padding-left: 0 !important;
+}
+.about-img img {
+    outline: 1px solid rgba(0, 0, 0, 0.1);
+    outline-offset: -1px;
+}
+
+/* ② 「当店について」の画像を小さくし、右上に移動する */
+.about-img {
+    text-align: right; /* 親要素内で右寄せ */
+}
+
+.about-img img {
+    width: 92% !important; /* サイズを小さく */
+    margin-top: -20px !important; /* 上に移動 */
+    margin-left: auto;
+    display: block;
+}
+
+/* 中央揃え */
+.about-text {
+    text-align: center !important;
+}
+
+/* 見出し中央寄せ */
+.about-text .section-title {
+    justify-content: center !important;
+    margin: 0 auto 1.5rem !important;
+}
+
+/* ボタンも中央に */
+.about-text .btn {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+/* 左右パディング */
+@media (max-width: 767.98px) {
+    .about {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    .service {
+        padding-left: 30px !important;
+        padding-right: 40px !important;
+    }
+    .contact, .quote, .testimonial, .team, .footer {
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+    }
+    
+    /* 内側コンテナの余白リセット */
+    .about .container, 
+    .about .container-xxl,
+    .service .container, 
+    .quote .container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+@media (min-width: 992px) {
+    /* 「当店について」と「サービス」のセクションの横幅を制限 */
+    .about .container,
+    .service .container {
+        max-width: 1280px !important; /* ここの数値で全体の横幅を調整できます */
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+}
+
+/* サービス項目の間の溝（スキマ）を少し広げる */
+@media (min-width: 992px) {
+    .service .row {
+        --bs-gutter-x: 2.5rem; /* 左右のアイテム間の距離を広げる */
+    }
+
+    /* 親要素を中央寄せに設定 */
+    .footer .row {
+        justify-content: center !important;
+    }
+
+    .about-content-box {
+        margin-top: -50px !important; /* 数値を大きくするほど上へ移動します */
+        position: relative;
+        z-index: 10; /* 画像より前面に確実に表示させる */
+    }
+}
+  
+/* 「当店について」エリア：背景を透明にして画像を見せる */
+.about {
+    background: transparent !important;
+    padding-top: 110px !important;
+}
+
+/* 「所在地・営業時間」エリア：半透明の黒背景を重ねる */
+.feature-section {
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* 既存の背景色設定を無効化 */
+.bg-light, .container-xxl.py-5 {
+    background-color: transparent !important;
+}
+
+/* 白背景＋オレンジの二重枠 */
+.about-promise {
+    position: relative;
+    background: rgba(255, 255, 255) !important; /* 一回り大きい白背景 */
+    border: none !important;
+    box-shadow: 0 0px 15px rgba(255, 255, 255) !important;
+    z-index: 5;
+}
+.about-promise::after {
+    content: "";
+    position: absolute;
+    top: 0px; 
+    left: 0px; 
+    right: 0px; 
+    bottom: 0px;
+    border: 3.5px solid #e94709 !important;
+    z-index: 6;
+    pointer-events: none;
+}
+.about-promise h4 {
+    color: #2b2c2e !important; /* 文字が見えるようにダークグレーに */
+    text-shadow: none !important; /* ここだけシャドウを除外 */
+}
+
+/* フッター（所在地など）の黒背景を半透明に直す */
+.bg-dark.footer {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+
+/* ⑤ アイコンの背景（薄グレー）を透明から復活させる */
+.btn-xl-square.bg-light {
+    background-color: rgba(255, 255, 255) !important; /* Bootstrap標準の薄グレー */
+}
+
+
+/* ⑥ 「当店について」の大きい画像のオレンジ枠の修正（内側の白をなくす） */
+.about-img {
+    position: relative;
+    z-index: 1;
+    padding-left: 0;
+}
+
+/* 「当店について」全体の左右余白を狭める */
+.about .container {
+    max-width: 95% !important; /* コンテナ自体を広げて余白を削る */
+}
+
+/* テキストエリアを包む半透明の白背景 */
+.about-content-box {
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    padding: 30px;                /* 内側の余白 */
+    border-radius: 4px;          /* 角を丸くする */
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* モバイル対応：スマホ時は余白を調整 */
+@media (max-width: 767.98px) {
+    .about-content-box {
+        padding: 30px;
+        margin-top: 0px !important;
+    }
+}
+
+.btn-xl-square.bg-light {
+    border-radius: 20px !important; /* 数値を大きくするとより丸くなります */
+    overflow: hidden;
+}
+
+/* 見出しの背景に画像を配置する設定 */
+.title-bg-deco {
+    position: relative;
+    display: inline-block; /* 幅を文字に合わせる */
+    z-index: 1;
+    padding: 0 10px;
+}
+
+.title-bg-deco h1 {
+    position: relative;
+    z-index: 5;            /* 文字を画像より前に */
+    margin: 0;
+    padding: 0 10px;
+}
+
+.title-bg-deco::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 110%;  
+    height: 1.5em;   
+    bottom: -0.2em;       
+    left: 50%;
+    transform: translateX(-50%);
+    /* 背景画像の指定 */
+    background-image: url('../img/line.png'); 
+    background-size: 100% 100%; 
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.coming-soon-box {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    /* --- 【変更①】親要素（コンテナ）の左右余白を打ち消して画面端まで広げる --- */
+    width: calc(110% + 32px) !important; /* 左右12pxずつ（計24px）要素自体を広げる */
+    margin-left: -30px !important;       /* 左側の隙間を強制的に埋める */
+    margin-right: -2px !important;      /* 右側の隙間を強制的に埋める */
+    box-sizing: border-box;
+
+    background-image: url('background_note.png') !important; 
+    background-repeat: no-repeat;
+    background-position: center;
+
+    /* --- 【変更②】画像を要素の横幅ぴったり（左右余白ゼロ）に引き伸ばす --- */
+    background-size: 100% auto !important; /* contain から 100% auto に変更 */
+
+    /* --- 【変更③】サイズをさらに大きくするために高さを引き上げる --- */
+    min-height: 380px;
+    max-width: 550px;
+    margin-top: -90px;
+    /* 5. 文字の位置や見栄えの調整 */
+    text-align: center;
+    padding: 20px; /* 上下に余白を作って文字を画像の中央付近に寄せる */
+}
+
+/* スマホ表示 */
+@media (max-width: 991.98px) {
+    .navbar-nav .nav-link[href="contact.html"] {
+        margin-bottom: 12px !important;
+    }
+}
+
+/* PC表示 */
+@media (min-width: 992px) {
+    .navbar-nav .nav-link[href="contact.html"] {
+        margin-bottom: 0 !important;
+    }
+}
+
+.service-text {
+    padding-top: 40px !important; 
+}
+
+/* 外枠（二重に下がるのを防ぐため margin-top は設定しない） */
+.service-item {
+    overflow: visible !important;
+}
+
+/* ホバー時の挙動（枠を白に変える） */
+.service-item:hover .service-inner::after {
+    border-color: #ffffff; /* 枠を白に変更 */
+}
+
+/* 背景の隙間解消 フッターリンクが押せない問題の修正 */
+.parallax-bg-wrapper {
+    position: relative;
+    width: 100%;
+    z-index: 0 !important; /* マイナスにするとフッターリンクが押せなくなります */
+}
+
+.parallax-bg-wrapper::before {
+    content: "";
+    position: fixed;
+    /* 上下にゆとり(-10vh)を持たせ、iOS特有のアドレスバー増減による隙間を完全に塞ぐ */
+    top: -10vh; 
+    left: 0;
+    right: 0;
+    bottom: -10vh;
+    width: 100vw;
+    height: 120vh; /* 画面より20%大きくして確実に覆う */
+    background-image: url('../img/background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -10 !important; /* コンテンツの1つ奥へ */
+    pointer-events: none; /* 背景がクリックの邪魔をしないようにする */
+}
+
+
+/* サービス画像に添えるワンポイントイラスト */
+.service-img-wrap {
+    position: relative;
+    display: block;
+    z-index: 5 !important; /* オレンジ枠線(::after, z-index:3)より手前に出す */
+}
+
+/* .service .service-item img (詳細度が高い) の box-shadow / width 等を
+   確実に上書きするため、同等以上の詳細度を持つセレクタで指定する */
+.service .service-item .service-illust {
+    position: absolute !important;
+    width: 32% !important;
+    max-width: 100px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 15 !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    outline: none !important;
+    border: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    background: none !important;
+    display: block !important;
+    pointer-events: none;
+}
+
+.service .service-item .service-illust.illust-bottom-left {
+    left: 0;
+    bottom: 0;
+}
+
+.service .service-item .service-illust.illust-bottom-right {
+    right: 0;
+    bottom: 0;
+}
+
+.service .service-item .service-illust.illust-top-left {
+    left: 0;
+    top: 0;
+}
+
+@media (max-width: 991.98px) {
+    .service .service-item .service-illust {
+        width: 28% !important;
+        max-width: 80px !important;
+    }
+}
+
+/* サービス画像が中央に寄る問題の修正（左上へ確実に出す） */
+.service .service-item img {
+    width: 100% !important;
+    margin-top: -25px !important;  /* 上への突き出し */
+    margin-right: -25px !important; /* 左への突き出し（ここをマイナスにして左上に固定） */
+    margin-left: auto !important; /* 右側の余白を自動にして中央寄せを無効化 */
+    margin-bottom: 15px !important;
+    display: block !important;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4) !important;
+    padding-left: 0 !important;
+}
+
+/* スマホ版でも左上をキープ */
+@media (max-width: 991.98px) {
+    .service .service-item img {
+        width: 90% !important;
+        margin-right: -30px !important;
+        margin-left: auto !important;
+    }
+}
+
+
+/* ③ サービス項目のホバー効果（オレンジ背景）が消えた問題の修正 */
+.service-inner {
+    margin-top: 60px !important;
+    overflow: visible !important;
+    position: relative;
+    background: rgba(255, 255, 255, 0.7) !important; /* すりガラス背景 */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.4) !important;
+    border-top: 1px solid transparent !important;
+    padding-left: 10px !important; 
+    padding-right: 10px !important;
+    transition: .5s;
+    z-index: 1;
+}
+
+/* ホバーでせり上がるオレンジ背景 */
+.service .service-inner::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 0;
+    left: 0;
+    bottom: 0;
+    transition: 1s;
+    background: #e94709 !important;
+    z-index: 0 !important; /* すりガラスより手前、文字より奥に配置 */
+}
+
+/* テキストがオレンジ背景に隠れないように最前面へ */
+.service-text, .service-item h5, .service-item p {
+    position: relative;
+    z-index: 2 !important; 
+}
+
+/* 内側のオレンジ枠線 */
+.service-inner::after {
+    content: "";
+    position: absolute;
+    top: 10px; left: 10px; right: 10px; bottom: 10px;
+    border: 3px solid #e94709;
+    z-index: 3 !important; /* 枠線を最前面へ */
+    transition: .5s;
+    pointer-events: none; /* 枠線がクリック判定を吸わないようにする */
+}
+
+/* ホバー時のオレンジ枠線の挙動 */
+.service-item:hover .service-inner::after {
+    border-color: #ffffff;
+}
+
+.hero-header {
+    position: relative;
+    z-index: 1;
+}
+
+.copyright {
+    position: relative;
+    z-index: 1;
+}
+
+/* メイン画像のフェードイン */
+.hero-header img {
+    animation: fadeInHero 1.5s ease-out forwards;
+}
+@keyframes fadeInHero {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* 曇りガラス風描画ラグ改善 */
+.service-inner, .about-content-box, .coming-soon-box, .bg-dark.footer {
+    will-change: backdrop-filter, transform;
+    transform: translateZ(0);
+}
+
+/* フッターリンクの文字サイズ */
+.footer .btn.btn-link {
+    font-size: 20px !important; /* 好みの数値に変更してください */
+}
+
+/* サービス項目アニメーション速度 */
+.service .service-inner::before {
+    transition: 0.4s ease-out !important; /* 1sから0.4s（0.4秒）に変更 */
+}
+/* オレンジ枠線の変化速度 */
+.service-inner::after {
+    transition: 0.3s !important; /* 0.5sから0.3秒に変更 */
+}
+
+/* （説明）テキスト */
+.about-content-box p {
+    font-size: 17px !important; /* 文字サイズ */
+    font-weight: bold !important; /* 太字 */
+    line-height: 1.6 !important; /* 行間 */
+    color: #555555 !important; /* 文字色 */
+}
+.service-text p {
+    font-size: 17px !important; /* 文字サイズ */
+    font-weight: bold !important; /* 太字 */
+    line-height: 1.6 !important; /* 行間 */
+}
+
+/* 背景レイヤーを最背面に固定 */
+.parallax-bg-wrapper::before {
+    z-index: 1 !important;
+}
+
+/* それ以外の全コンテンツを背景より前に出す */
+#spinner, .navbar, .hero-header, .container-xxl, .container-fluid, .footer, .copyright {
+    position: relative;
+    z-index: 10;
+}
+
+/* ナビゲーションバーはさらにその上 */
+.navbar {
+    z-index: 100 !important;
+}
+
+/* メニューバーのスクロールバグ修正 */
+.sticky-top {
+    position: sticky !important;
+    top: 0 !important;
+    margin-top: 0 !important;
+    transform: none !important;
+    transition: none !important;
+    z-index: 1020 !important;
+    background-color: #ffffff !important; 
+}
+
+/* フッターの余白調整（PC表示） */
+@media (min-width: 992px) {
+    /* 所在地エリア：幅を広げる (5/12) */
+    .footer .row.g-5 > div:nth-child(1) {
+        flex: 0 0 41.666667% !important;
+        max-width: 41.666667% !important;
+        width: 41.666667% !important;
+    }
+    /* 営業時間エリア：幅はそのまま (4/12) */
+    .footer .row.g-5 > div:nth-child(2) {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        width: 25% !important;
+    }
+    /* リンクエリア：幅を狭める (3/12) */
+    .footer .row.g-5 > div:nth-child(3) {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        width: 25% !important;
+        padding-left: 4rem !important; /* リンクを少し右に寄せて中央との隙間を調整 */
+    }
+    
+    .coming-soon-box {
+        width: 100% !important;
+        max-width: 550px;    /* PCでの画像の最大横幅 */
+        min-height: 340px;   /* PCでの画像の高さ */
+        background-size: 100% 100%; /* または contain/cover */
+        margin: -40px auto 0 auto !important;
+    }
+}
+
+/* --- 背景設定（基本：横長画面用） --- */
+.parallax-bg-wrapper {
+    background-image: url('../img/background.png'); 
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    width: 100%;
+}
+
+.parallax-bg-wrapper,
+.page-background::before,
+.parallax-bg-wrapper::before {
+    background-position: top !important; /* 常に画像の上端を基準にする */
+}
+
+/* --- 縦長画面（アスペクト比が1:1以下のとき）用の設定 --- */
+@media (max-aspect-ratio: 1/1) {
+    /* 親要素と疑似要素の両方を書き換える */
+    .parallax-bg-wrapper,
+    .page-background::before,
+    .parallax-bg-wrapper::before {
+        background-image: url('../img/background2.png') !important;
+        background-position: top !important;
+    }
+}
+
+/* アニメーションを画像（img-fluid）自体に適用する設定を追加 */
+.about-img .img-fluid {
+    position: relative; /* アニメーションで top を動かすために必要 */
+    width: 100% !important; /* 横幅いっぱいに表示 */
+    animation: animateUpDown 3s ease-in-out infinite; /* ←【追加】元の枠線のアニメーションを継承 */
+    transform: translateY(25px);
+}
+
+/* ==================================================
+   歯車全体の共通設定（シャドウの非表示を含む）
+   ================================================== */
+.about-img .about-illust-wrap {
+    position: absolute;
+    z-index: 20;
+}
+
+.about-img .about-illust {
+    display: block;
+    /* --------------------------------------------------
+       【影の非表示】あらゆるシャドウ設定を完全に消去
+       -------------------------------------------------- */
+    box-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+
+    outline: none !important;  /* 薄い外枠（アウトライン）を強制消去 */
+    border: none !important;
+    
+    /* 縦横比を保ちつつ、指定した正方形に強制フィットさせる設定 */
+    object-fit: contain !important;
+    transform-origin: center center;
+}
+
+/* ==================================================
+   アニメーションの動きの定義（右回りと左回り）
+   ================================================== */
+/* 時計回り（右） */
+@keyframes rotateClockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* 反時計回り（左） */
+@keyframes rotateCounterClockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+/* --------------------------------------------------
+   【1つ目の歯車】（例：大サイズ・左上・ゆっくり右回転）
+   -------------------------------------------------- */
+.gear-1 {
+    top: -60px;   /* 位置：上 */
+    left: -34px;  /* 位置：左 */
+}
+.gear-1 .about-illust {
+    width: 100px !important;  /* サイズ（縦横同じにする） */
+    height: 100px !important;
+    animation: rotateClockwise 6s linear infinite; /* 右回りに12秒（遅め） */
+}
+
+/* --------------------------------------------------
+   【2つ目の歯車】（例：中サイズ・1つ目の右隣・少し速い左回転）
+   -------------------------------------------------- */
+.gear-2 {
+    top: -30px;   /* 位置：上 */
+    left: 51px;   /* 位置：左（1つ目の歯車と噛み合う位置に調整） */
+}
+.gear-2 .about-illust {
+    width: 70px !important;   /* サイズ */
+    height: 70px !important;
+    animation: rotateCounterClockwise 4s linear infinite; /* 左回りに6秒（速め） */
+}
+
+/* --------------------------------------------------
+   【3つ目の歯車】（例：小サイズ・本体画像の右下など自由な場所へ）
+   -------------------------------------------------- */
+.gear-3 {
+    top: 22px;    /* 位置：上 */
+    left: 28px;  /* 位置：左 */
+}
+.gear-3 .about-illust {
+    width: 55px !important;   /* サイズ */
+    height: 55px !important;
+    animation: rotateClockwise 3s linear infinite; /* 右回りに4s（さらに速め） */
+}
+
+/* 3. 回転アニメーションの動きの定義（0度から360度まで時計回りに1周する） */
+@keyframes rotateAnime {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==================================================
+   【追加】右下端のタイヤ（tires.png）設定
+   ================================================== */
+
+/* 1. タイヤを本体画像の右下基準で配置する箱 */
+.about-img .about-tires-wrap {
+    position: absolute;
+    z-index: 20; /* 本体画像（img-fluid）よりも手前に配置 */
+    
+    /* --------------------------------------------------
+       【調整ポイント①】タイヤの表示位置
+       本体画像の右下端を基準（0px）にしています。
+       はみ出させたい場合は、マイナスの数値（例: bottom: -20px; right: -20px;）に調整してください。
+       -------------------------------------------------- */
+    bottom: -60px; /* 下端からの位置（本体画像の浮き上がり分25pxを考慮） */
+    right: -34px;   /* 右端からの位置 */
+}
+
+/* 2. タイヤ画像自体のサイズ・装飾リセット設定 */
+.about-img .about-tires {
+    z-index: 20;
+    display: block;
+    width: 160px !important;  /* タイヤの横幅 */
+    height: auto;  /* 縦幅は自動（比率維持） */
+
+    /* アニメーションなし */
+    animation: none !important;
+    transform: none !important;
+
+    /* シャドウ（影）と細枠（アウトライン・ボーダー）を完全に非表示 */
+    box-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    outline: none !important;
+    border: none !important;
+    
+    object-fit: contain !important;
+}
+
+/* 全イラスト共通の基本サイズ */
+.service .service-item .service-illust {
+    width: 40% !important;        /* 大きさ（比率） */
+    max-width: 150px !important;  /* 最大サイズ */
+}
+
+@media (max-width: 991.98px) {
+    .service .service-item .service-illust {
+        max-width: 120px !important;  /* 最大サイズ */
+    }
+}
+
+/* 左下のイラスト位置 */
+.service .service-item .service-illust.illust-bottom-left {
+    left: 0px;   /* 左端からの距離 */
+    bottom: -40px !important; /* 下端からの距離 */
+}
+
+/* 右下のイラスト位置 */
+.service .service-item .service-illust.illust-bottom-right {
+    right: -30px;  /* 右端からの距離 */
+    bottom: -50px; /* 下端からの距離 */
+}
+
+/* 左上のイラスト位置 */
+.service .service-item .service-illust.illust-top-left {
+    left: 0px;   /* 左端からの距離 */
+    top: -30px;    /* 上端からの距離 */
+    max-width: 175px !important; 
+}
